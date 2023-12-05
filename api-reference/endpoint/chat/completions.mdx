@@ -1,0 +1,133 @@
+---
+title: 'Chat Completions'
+api: 'POST /v1/chat/completions'
+---
+
+# Chat Completion Request
+
+<ParamField path="user" type="string">
+  The id of the user
+</ParamField>
+
+
+<ParamField path="model" type="Object" required="true">
+    This is where you define the platform and model to use for the chat completion.
+    <Expandable title="properties">
+        <ParamField path="platform" type="string" required="true">
+            The platform of the model. Currently only `openai` is supported
+        </ParamField>
+
+        <ParamField path="name" type="string" required="true">
+            The name of the model. This supports all the models available on the specified platforms.
+        </ParamField>
+    </Expandable>
+</ParamField>
+
+<ParamField path="query" type="Query Object" required="true">
+    This is where you define the query to send to the model.
+    <Expandable title="properties">
+        <ParamField path="messages" type="array" required="true">
+            The messages to send to the model. Each message is an object with the following properties:
+            <Expandable title="properties">
+                <ParamField path="role" type="string" required="true">
+                    The role of the message. This can be either `user`, `system`, `assistant`, `tool`.
+                </ParamField>
+
+                <ParamField path="content" type="string" required="true">
+                    The content of the message.
+                </ParamField>
+            </Expandable>
+        </ParamField>
+    </Expandable>
+</ParamField>
+
+<ParamField path="response" type="Object" required="true">
+    This is where you define the response format and other options.
+    <Expandable title="properties">
+        <ParamField path="platform" type="string" required="true">
+            The platform of the model. Currently only `openai` is supported
+        </ParamField>
+
+        <ParamField path="name" type="string" required="true">
+            The name of the model. This supports all the models available on the specified platforms.
+        </ParamField>
+    </Expandable>
+</ParamField>
+
+<ParamField path="options" type="Object">
+    You can pass additional parameters to be used by Gateway API.
+</ParamField>
+
+
+## Chat Completion Response
+
+<RequestExample>
+```bash Curl
+
+user = "user_jskjf93o101"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object",
+    "stream": true
+}
+
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--data '{
+    "user": '"$user"',
+    "model": '"$model"',
+    "query": '"$query"',
+    "response": '"$response"'
+}'
+```
+
+```python Python
+
+# Create Request Parameters
+user = "user_jskjf93o101"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object",
+    "stream": True
+}
+
+# Call API
+stream = zella_ai.chat.completions.create(user, model, query, response)
+
+# Iterate over stream
+for chunk in stream:
+    if chunk:
+        print(chunk)
+```
+
+```javascript Javascript
+
+```
+</RequestExample>
