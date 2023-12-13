@@ -12,10 +12,10 @@ api: "POST /v1/chat/completions"
 </ParamField>
 
 <ParamField body="model" type="Object" required="true">
-  The model configuration used for the chat completion.
+  The model configuration used for the chat completion. [See how to choose model configuration](/models).
     <Expandable title="properties">
         <ParamField path="platform" type="string" required="true">
-            The AI platform used for the model. Currently, only `openai` is supported.
+            The AI platform used for the model.
         </ParamField>
 
         <ParamField path="name" type="string" required="true">
@@ -23,31 +23,6 @@ api: "POST /v1/chat/completions"
         </ParamField>
         <ParamField path="timeout" type="number" required="false">
             The timeout for the model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
-        </ParamField>
-        <ParamField path="retries" type="number" required="false">
-            The number of retries for the model. Default is 0. Must be greater an integer than -1 and less than 6.
-        </ParamField>
-        <ParamField path="fallback" type="Object">
-            Defines the fallback models to be used if the main model fails to respond.
-            <Expandable title="properties">
-                <ParamField path="models" type="array">
-                    An array of fallback model configurations.
-                    <Expandable title="properties">
-                        <ParamField path="platform" type="string" required="true">
-                            The AI platform used for the fallback model. Currently, only `openai` is supported.
-                        </ParamField>
-                        <ParamField path="name" type="string" required="true">
-                            The name of the AI fallback model. This should be a valid model available on the specified platform.
-                        </ParamField>
-                        <ParamField path="timeout" type="number" required="false">
-                            The timeout for the fallback model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
-                        </ParamField>
-                        <ParamField path="retries" type="number" required="false">
-                            The number of retries for the fallback model. Default is 0. Must be greater an integer than -1 and less than 6.
-                        </ParamField>
-                    </Expandable>
-                </ParamField>
-            </Expandable>
         </ParamField>
     </Expandable>
 
@@ -325,44 +300,8 @@ for chunk in stream:
         print(chunk)
 ````
 
-```javascript Javascript
-// Create Request Parameters
-
-const user = "user_jskjf93o10"
-const model = {
-  platform: "openai",
-  name: "gpt-3.5-turbo",
-}
-const query = {
-  messages: [
-    {
-      role: "system",
-      content: "You are a helpful assistant to help design api structure",
-    },
-    {
-      role: "user",
-      content: "Hi There!",
-    },
-  ],
-}
-const response = {
-  format: "json_object",
-  stream: true,
-}
-
-// Call API
-const stream = zella_ai.chat.completions.create(user, model, query, response)
-
-// Iterate over stream
-for await (const chunk of stream) {
-  if (chunk) {
-    console.log(chunk)
-  }
-}
-```
-
 </RequestExample>
 
-The example shows how to make a POST request to the Chat Completions API using curl, Python, and JavaScript. The API requires a json body with the properties `user`, `model`, `query`, and `response`.
+The example shows how to make a POST request to the Chat Completions API using curl and Python. The API requires a json body with the properties `user`, `model`, `query`, and `response`.
 
 If the request is successful, the API will return a json object containing the model's response to the chat completion request. If there is an error, the API will return a json object containing details about the error.

@@ -1,14 +1,115 @@
 ---
 title: OpenAI
-description: 
+description: Integrate with OpenAI using Zella Gateway.
 ---
+
+## Get Started
+Begin by setting up an account on [Zella AI](https://zella.ai/).
+Simply link your OpenAI access token in Zella to obtain a Zella access token, which you'll use for API requests.
+
+
+
 
 ## Supported Features
 
 ### Chat Completion
 
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+},
+"query": {
+    "messages": [
+        {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+        },
+        {
+        "role": "user",
+        "content": "Hi There!"
+        }
+    ]
+},
+"response": {
+    "format": "json_object",
+    "stream": true
+    }
+}'
+````
+
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object"
+}
+response = zella_ai.chat.completions.create(user, model, query, response)
+```
+
+</CodeGroup>
+
 ### Embeddings
 
-### Voice to Text
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/embeddings \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "openai",
+    "name": "text-embedding-ada-002"
+},
+"query": {
+    "input": "Hello World!",
+},
+"response": {
+    "format": "float",
+}
+}'
+```
 
-### Text to Speech
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "text-embedding-ada-002"
+}
+query = {
+    "input": "Hello World!",
+}
+response = {
+    "format": "float"
+}
+response = zella_ai.embedding.embed(user, model, query, response)
+```
+</CodeGroup>

@@ -1,0 +1,119 @@
+---
+title: 'Python'
+icon: 'python'
+---
+
+To get started, create an account on [Zella AI](https://zella.ai/) and get your Zella access token.
+
+Once you have that all set up, [install Zella Python SDK using](https://pypi.org/project/zella/) `pip`.
+
+```bash
+pip install zella
+```
+
+Zella Python library has support for both Zella Gateway as well as Langchain callbacks.
+
+## AI Gateway
+
+Zella's AI Gateway, paired with our Python SDK, offers a simple and efficient way to integrate AI
+features into your applications. It acts as a bridge, connecting Python developers to a diverse
+range of AI tools and services through one streamlined platform.
+
+### Chat Completion
+
+Connect to the Zella AI Chat Completion API using our Python SDK.
+
+<CodeGroup>
+
+```python chat.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object"
+}
+response = zella_ai.chat.completions.create(user, model, query, response)
+```
+
+</CodeGroup>
+
+### Chat Completion with streaming
+
+To enable streaming responses, simply set the 'stream' attribute to True in the response object.
+This feature is available only if the underlying model platform supports streaming. Below is a
+sample implementation:
+
+<CodeGroup>
+
+```python chat_stream.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object",
+    "stream": True
+}
+response = zella_ai.chat.completions.create(user, model, query, response)
+```
+
+</CodeGroup>
+
+### Embeddings
+
+Transform text into insightful vectors with Zella,
+utilizing a range of embedding models and platforms for diverse applications.
+
+<CodeGroup>
+
+```python embedding.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "text-embedding-ada-002"
+}
+query = {
+    "input": "Hello World!",
+}
+response = {
+    "format": "float"
+}
+response = zella_ai.embedding.embed(user, model, query, response)
+```
+
+</CodeGroup>

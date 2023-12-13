@@ -1,6 +1,73 @@
 ---
 title: Huggingface
-description: 
+description: Integrate with Huggingface using Zella Gateway.
 ---
 
-Coming soon....
+## Get Started
+Begin by setting up an account on [Zella AI](https://zella.ai/).
+Simply link your Huggingface access token in Zella to obtain a Zella access token, which you'll use for API requests.
+
+
+
+
+## Supported Features
+
+### Chat Completion
+
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "huggingface",
+    "name": "microsoft/DialoGPT-large"
+},
+"query": {
+    "messages": [
+        {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+        },
+        {
+        "role": "user",
+        "content": "Hi There!"
+        }
+    ]
+},
+"response": {
+    "format": "json_object",
+    "stream": true
+    }
+}'
+````
+
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "huggingface",
+    "name": "microsoft/DialoGPT-large"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object"
+}
+response = zella_ai.chat.completions.create(user, model, query, response)
+```
+
+</CodeGroup>
