@@ -3,17 +3,91 @@ title: 'Embeddings'
 api: 'POST /v1/embeddings'
 ---
 
+# Embeddings Request
+
+## Request Body Parameters
+
+<ParamField body="user" type="string">
+  The unique identifier of the user.
+</ParamField>
+
+<ParamField body="model" type="Object" required="true">
+  The model configuration used for the chat completion. [See how to choose model configuration](/models).
+    <Expandable title="properties">
+        <ParamField path="platform" type="string" required="true">
+            The AI platform used for the model.
+        </ParamField>
+
+        <ParamField path="name" type="string" required="true">
+            The name of the AI model. This should be a valid model available on the specified platform.
+        </ParamField>
+        <ParamField path="timeout" type="number" required="false">
+            The timeout for the model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
+        </ParamField>
+    </Expandable>
+
+</ParamField>
+
+<ParamField body="query" type="Object" required="true">
+  Contains the query to be processed by the model.
+    <Expandable title="properties">
+        <ParamField path="input" type="string" required="true">
+            Input string to generate embeddings.
+        </ParamField>
+    </Expandable>
+
+</ParamField>
+
+<ParamField body="response" type="Object" required="true">
+  Defines the desired response format and options.
+  <Expandable title="properties">
+    <ParamField path="format" type="string" required="true">
+      The format of the response. Must be one of `float` or `base64`.
+      Default is `float`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="options" type="Object">
+  Contains any additional parameters to be used by Gateway API.
+</ParamField>
 
 <RequestExample>
 ```bash Curl
-
-```
-
-```javascript Javascript
-
+curl --request POST \
+--url https://gateway.zella.ai/v1/embeddings \
+--header 'content-type: application/json' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "openai",
+    "name": "text-embedding-ada-002"
+},
+"query": {
+    "input": "Hello World!",
+},
+"response": {
+    "format": "float",
+}
+}'
 ```
 
 ```python Python
-
+user = "2312re3r33e33"
+model = {
+    "platform": "openai",
+    "name": "text-embedding-ada-002"
+}
+query = {
+    "input": "Hello World!",
+}
+response = {
+    "format": "float"
+}
+response = zella_ai.embedding.embed(user, model, query, response)
 ```
 </RequestExample>
+
+The example shows how to make a POST request to the Embeddings API using curl and Python. The API requires a json body with the properties `user`, `model`, `query`, and `response`.
+
+If the request is successful, the API will return a json object containing the model's response to the embeddings request. If there is an error, the API will return a json object containing details about the error.
