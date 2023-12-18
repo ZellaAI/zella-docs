@@ -38,6 +38,11 @@
       "url": "https://zella.ai/dashboard"
     },
     {
+      "name": "Service Status",
+      "icon": "shield-check",
+      "url": "https://status.zella.ai"
+    },
+    {
       "name": "Community",
       "icon": "discord",
       "url": "https://discord.gg/ktMGDfM64n"
