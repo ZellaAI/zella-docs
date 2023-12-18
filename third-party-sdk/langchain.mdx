@@ -1,0 +1,86 @@
+---
+title: "Langchain SDK"
+description: "Use Langchain SDK to integrate with Zella"
+---
+
+To facilitate a smooth transition to Zella with minimal modifications to your current setup, 
+we've incorporated compatibility with OpenAI's request/response structure in the Zella Gateway.
+This means you can seamlessly integrate with Zella while continuing to use the Langchain SDK, ensuring an effortless integration process.
+
+### Chat Completion
+
+Connect to the Zella AI Chat Completion API using Langchain SDK.
+
+<CodeGroup>
+
+```python chat.py
+from langchain.chat_models import ChatOpenAI
+
+client = ChatOpenAI(
+            openai_api_base="https://gateway.zella.ai/v1/openai",
+            model_name="zella-101-test",  # Pass our configured model name here.
+            api_key="******************",  # Zella API Key
+            streaming=False,
+            model_kwargs={
+                "extra_body": {
+                    "platform": "zella"  # Pass platform "zella" here.
+                }
+            }
+        )
+chat_completion = client([HumanMessage(content="How do I add fallbacks in Zella?")])
+print(chat_completion)
+```
+
+</CodeGroup>
+
+### Chat Completion with streaming
+
+To enable streaming responses, simply set the 'stream' attribute to True in the response object.
+This feature is available only if the underlying model platform supports streaming. Below is a
+sample implementation:
+
+<CodeGroup>
+
+```python chat_stream.py
+from langchain.chat_models import ChatOpenAI
+
+client = ChatOpenAI(
+            openai_api_base="https://gateway.zella.ai/v1/openai",
+            model_name="gpt-4",  # Pass our configured model name here.
+            api_key="******************",  # Zella API Key
+            streaming=True,
+            model_kwargs={
+                "extra_body": {
+                    "platform": "openai"  # Pass platform "zella" here.
+                }
+            }
+        )
+chat_completion = client([HumanMessage(content="How do I add fallbacks in Zella?")])
+print(chat_completion)
+```
+
+</CodeGroup>
+
+### Embeddings
+
+Transform text into insightful vectors with Zella,
+utilizing a range of embedding models and platforms for diverse applications.
+
+<CodeGroup>
+
+```python embedding.py
+from langchain.embeddings import OpenAIEmbeddings
+embeddings_model = OpenAIEmbeddings(
+    openai_api_base="https://gateway.zella.ai/v1/openai",
+    model="embedding-001",
+    api_key="test-key",
+    model_kwargs={
+        "extra_body": {
+            "platform": "google"
+        }
+    }
+)
+embeddings = embeddings_model.embed_documents(["Hello world", "Hello"])
+print(embeddings)
+```
+</CodeGroup>

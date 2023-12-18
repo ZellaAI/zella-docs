@@ -1,0 +1,216 @@
+---
+title: "Completions"
+api: "POST /v1/completions"
+---
+
+# Completion Request
+
+## Request Body Parameters
+
+<ParamField body="user" type="string">
+  The unique identifier of the user.
+</ParamField>
+
+<ParamField body="model" type="Object" required="true">
+  The model configuration used for the completion. [See how to choose model configuration](/models).
+    <Expandable title="properties">
+        <ParamField path="platform" type="string" required="true">
+            The AI platform used for the model.
+        </ParamField>
+
+        <ParamField path="name" type="string" required="true">
+            The name of the AI model. This should be a valid model available on the specified platform.
+        </ParamField>
+        <ParamField path="timeout" type="number" required="false">
+            The timeout for the model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
+        </ParamField>
+    </Expandable>
+
+</ParamField>
+
+<ParamField body="query" type="Object" required="true">
+  Contains the query to be processed by the model.
+  <Expandable title="properties">
+    <ParamField path="content" type="string" required="true">
+      The content of the message.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="response" type="Object" required="true">
+  Defines the desired response format and options.
+  <Expandable title="properties">
+    <ParamField path="format" type="string" required="true">
+      The format of the response. Must be one of `text` or `json_object`.
+      Default is `text`.
+    </ParamField>
+    <ParamField path="stream" type="boolean">
+      Whether the response should be streamed. Default is `false`.
+    </ParamField>
+    <ParamField path="tools" type="array">
+      An array of tools to be used for processing the response.
+      <Expandable title="properties">
+        <ParamField path="type" type="string" required="true">
+          The type of the tool. Must be one of 'function'.
+        </ParamField>
+        <ParamField path="function" type="Object">
+          The function to be used for processing the response.
+          <Expandable title="properties">
+            <ParamField
+              path="name"
+              type="string"
+              required="true"
+              max="64"
+              regex="^[a-zA-Z0-9_-]+$"
+            >
+              The name of the function. Must be a string with a maximum length
+              of 64 and match the regex /^[a-zA-Z0-9_-]+$/.
+            </ParamField>
+            <ParamField path="description" type="string">
+              The description of the function.
+            </ParamField>
+            <ParamField path="parameters" type="Object">
+              The parameters of the function.
+              <ParamField path="<parameter>" type="any">
+                The parameter name and type.
+              </ParamField>
+            </ParamField>
+          </Expandable>
+        </ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField path="preferred_tool" type="string">
+      The preferred tool to be used for processing the response. Must be one of
+      the tools in the tools list.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="options" type="Object">
+  Contains any additional parameters to be used by Gateway API.
+</ParamField>
+
+## Completion Response
+
+This response will contain the model's response to the completion request.
+
+<ResponseField name="tryId" type="string">
+  The unique identifier of the completion request.
+</ResponseField>
+
+<ResponseField name="status" type="Object">
+  The status of the completion response.
+  <Expandable title="properties">
+    <ResponseField name="type" type="string">
+      The type of the status. Can be one of `ok`, `platform_error`, `error`.
+    </ResponseField>
+    <ResponseField name="code" type="number">
+        - `200` - The request was successful.
+        - `400` - The request was invalid.
+        - `401` - The request was unauthorized.
+        - `611` - The request was forbidden.
+        - `201` - The request was not found.
+        - `600` - The request failed due to an internal server error.
+        - `603` - The request failed due to a service unavailable error.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="model" type="Object">
+  The model used for the completion response.
+  <Expandable title="properties">
+    <ResponseField name="platform" type="string">
+      The platform of the model.
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The name of the model.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="data" type="Object">
+  The data of the completion response.
+</ResponseField>
+
+<ResponseField name="usage" type="Object">
+  The usage of the completion response.
+</ResponseField>
+
+<ResponseField name="meta" type="Object">
+  The meta information of the completion response.
+</ResponseField>
+
+<ResponseField name="retries" type="array">
+  An array of retry objects.
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The unique identifier of the retry.
+    </ResponseField>
+    <ResponseField name="platform" type="string">
+      The platform of the retry.
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The name of the retry.
+    </ResponseField>
+    <ResponseField name="error" type="string">
+      The error message of the retry.
+    </ResponseField>
+    <ResponseField name="timeout" type="number">
+      The timeout of the retry.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+```bash Curl
+
+curl --request POST \
+--url https://gateway.zella.ai/v1/completions \
+--header 'content-type: application/json' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+},
+"query": {
+    "content": "Who was Darth Vader?",
+},
+"response": {
+    "format": "json_object",
+    "stream": true
+    }
+}'
+
+````
+
+```python Python
+
+# Create Request Parameters
+user = "user_jskjf93o101"
+model = {
+    "platform": "openai",
+    "name": "gpt-3.5-turbo"
+}
+query = {
+    "content": "Who was Darth Vader?"
+}
+response = {
+    "format": "json_object",
+    "stream": True
+}
+
+# Call API
+stream = zella_ai.completions.create(user, model, query, response)
+
+# Iterate over stream
+for chunk in stream:
+    if chunk:
+        print(chunk)
+````
+
+</RequestExample>
+
+The example shows how to make a POST request to the Completions API using curl and Python. The API requires a json body with the properties `user`, `model`, `query`, and `response`.
+
+If the request is successful, the API will return a json object containing the model's response to the completion request. If there is an error, the API will return a json object containing details about the error.
