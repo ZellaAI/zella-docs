@@ -1,13 +1,11 @@
 ---
-title: OpenAI
-description: Integrate with OpenAI using Zella Gateway.
+title: Google
+description: Integrate with Google Gemini using Zella Gateway.
 ---
 
 ## Get Started
 Begin by setting up an account on [Zella AI](https://zella.ai/).
-Simply link your OpenAI access token in Zella to obtain a Zella access token, which you'll use for API requests.
-
-
+Simply link your [Google access token](https://makersuite.google.com/app/apikey) in Zella to obtain a Zella access token, which you'll use for API requests.
 
 
 ## Supported Features
@@ -22,8 +20,8 @@ curl --request POST \
 --data '{
 "user": "user_jskjf93o101",
 "model": {
-    "platform": "openai",
-    "name": "gpt-3.5-turbo"
+    "platform": "google",
+    "name": "gemini-pro"
 },
 "query": {
     "messages": [
@@ -51,8 +49,8 @@ zella_ai = ZellaAI(api_key="*****************")
 
 user = "2312re3r33e33"
 model = {
-    "platform": "openai",
-    "name": "gpt-3.5-turbo"
+    "platform": "google",
+    "name": "gemini-pro"
 }
 query = {
     "messages": [ {
@@ -83,8 +81,8 @@ curl --request POST \
 --data '{
 "user": "user_jskjf93o101",
 "model": {
-    "platform": "openai",
-    "name": "gpt-3.5-turbo"
+    "platform": "google",
+    "name": "gemini-pro"
 },
 "query": {
     "content": "What was Darth Vader like as a kid?"
@@ -102,8 +100,8 @@ zella_ai = ZellaAI(api_key="*****************")
 
 user = "2312re3r33e33"
 model = {
-    "platform": "openai",
-    "name": "gpt-3.5-turbo"
+    "platform": "google",
+    "name": "gemini-pro"
 }
 query = {
     "content": "What was Darth Vader like as a kid?"
@@ -126,8 +124,8 @@ curl --request POST \
 --data '{
 "user": "user_jskjf93o101",
 "model": {
-    "platform": "openai",
-    "name": "text-embedding-ada-002"
+    "platform": "google",
+    "name": "embedding-001"
 },
 "query": {
     "input": "Hello World!",
@@ -145,8 +143,8 @@ zella_ai = ZellaAI(api_key="*****************")
 
 user = "2312re3r33e33"
 model = {
-    "platform": "openai",
-    "name": "text-embedding-ada-002"
+    "platform": "google",
+    "name": "embedding-001"
 }
 query = {
     "input": "Hello World!",

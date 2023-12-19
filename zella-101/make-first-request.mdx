@@ -1,0 +1,154 @@
+---
+title: 'First Request'
+description: "Let's start by sending your first chat completion request"
+icon: "circle-3"
+---
+
+In this step, we'll utilize the platform and model `zella-101-test` configured in the earlier steps by initiating our first chat completion request. 
+Zella Gateway offers several methods to send a request, providing you with flexible options to suit your needs.
+
+## REST API
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "zella",
+    "name": "zella-101-test"
+},
+"query": {
+    "messages": [
+        {
+        "role": "system",
+        "content": "You are a helpful assistant to understand how Zella works."
+        },
+        {
+        "role": "user",
+        "content": "How do I manage my models in Zella?"
+        }
+    ]
+},
+"response": {
+    "stream": true
+    }
+}'
+````
+
+## Python SDKs
+
+With Zella, you have the flexibility to use not just our Python SDK, but also the OpenAI and Langchain Python SDKs for sending requests through the Zella Gateway. 
+While we recommend using the Zella SDK for full access to all features and support, 
+you can easily integrate with the OpenAI or Langchain SDKs if you prefer minimal changes to your existing workflow. This allows for a swift and convenient start.
+
+#### Install Zella Python SDK
+
+```bash
+pip install zella
+```
+
+#### Make chat completions request in python
+<CodeGroup>
+```python Zella SDK
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "zella",
+    "name": "zella-101-test"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to understand how Zella works."
+    },
+    {
+        "role": "user",
+        "content": "How do I add fallbacks in Zella?"
+    }]
+}
+response = {
+    "stream": "true"
+}
+response = zella_ai.chat.completions.create(user, model, query, response)
+```
+
+```python OpenAI SDK
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="*********", # Zella API Key
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "How do I add fallbacks in Zella?",
+        }
+    ],
+    model="zella-101-test", # Pass our configured model name here.
+    extra_body={"platform": "zella"}, # Pass platform "zella" here.
+    user="test-user",
+    stream=False,
+)
+print(chat_completion)
+```
+
+```python Langchain SDK
+from langchain.chat_models import ChatOpenAI
+
+client = ChatOpenAI(
+            openai_api_base="https://gateway.zella.ai/v1/openai",
+            model_name="zella-101-test",  # Pass our configured model name here.
+            api_key="******************",  # Zella API Key
+            streaming=False,
+            model_kwargs={
+                "extra_body": {
+                    "platform": "zella"  # Pass platform "zella" here.
+                }
+            }
+        )
+chat_completion = client([HumanMessage(content="How do I add fallbacks in Zella?")])
+print(chat_completion)
+```
+</CodeGroup>
+
+
+## Next:
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    href="/api-reference/introduction"
+    icon="circle-1"
+  >
+    Zella AI API reference
+  </Card>
+  <Card
+    title="Python SDK"
+    href="/sdk/python"
+    icon="circle-2"
+  >
+    Learn how to use Zella Python SDK.
+  </Card>
+  <Card
+    title="OpenAI SDK"
+    href="../sdk/third-party-sdk/openai"
+    icon="circle-3"
+  >
+    Use OpenAI SDK to get started with Zella with minimal code changes.
+  </Card>
+  <Card
+    title="Langchain SDK"
+    href="../sdk/third-party-sdk/langchain"
+    icon="circle-4"
+  >
+    Learn how to use Zella with Langchain SDK.
+  </Card>
+  
+</CardGroup>

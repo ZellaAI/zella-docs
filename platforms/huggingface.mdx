@@ -71,3 +71,89 @@ response = zella_ai.chat.completions.create(user, model, query, response)
 ```
 
 </CodeGroup>
+
+
+### Completion
+
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/completions \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "huggingface",
+    "name": "gpt2"
+},
+"query": {
+    "content": "What was Darth Vader like as a kid?"
+},
+"response": {
+    "stream": false
+    }
+}'
+````
+
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "huggingface",
+    "name": "gpt2"
+}
+query = {
+    "content": "What was Darth Vader like as a kid?"
+}
+response = {
+    "stream": False
+}
+response = zella_ai.completions.create(user, model, query, response)
+```
+
+</CodeGroup>
+
+### Embeddings
+
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/embeddings \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "huggingface",
+    "name": "sentence-transformers/paraphrase-xlm-r-multilingual-v1"
+},
+"query": {
+    "input": "Hello World!",
+},
+"response": {
+    "format": "float",
+}
+}'
+```
+
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "huggingface",
+    "name": "sentence-transformers/paraphrase-xlm-r-multilingual-v1"
+}
+query = {
+    "input": "Hello World!",
+}
+response = {
+    "format": "float"
+}
+response = zella_ai.embedding.embed(user, model, query, response)
+```
+</CodeGroup>

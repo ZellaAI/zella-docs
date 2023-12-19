@@ -27,6 +27,10 @@
   },
   "tabs": [
     {
+      "name": "SDKs",
+      "url": "sdk"
+    },
+    {
       "name": "API Reference",
       "url": "api-reference"
     }
@@ -51,15 +55,27 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "models"]
+      "pages": ["introduction", "what-is"]
+    },
+    {
+      "group": "Zella 101",
+      "pages": ["zella-101/get-started", "zella-101/setup-access", "zella-101/configure-model", "zella-101/make-first-request"]
     },
     {
       "group": "Platforms",
-      "pages": ["platforms/openai", "platforms/huggingface"]
+      "pages": ["platforms/google", "platforms/openai", "platforms/huggingface"]
     },
     {
-      "group": "SDKs",
+      "group": "Get Started",
+      "pages": ["sdk/introduction"]
+    },
+    {
+      "group": "Zella SDKs",
       "pages": ["sdk/python", "sdk/node"]
+    },
+    {
+      "group": "Supported SDKs",
+      "pages": ["sdk/third-party-sdk/openai", "sdk/third-party-sdk/langchain"]
     },
     {
       "group": "API Documentation",
@@ -69,6 +85,7 @@
       "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/chat/completions",
+        "api-reference/endpoint/completions",
         "api-reference/endpoint/embeddings"
       ]
     }

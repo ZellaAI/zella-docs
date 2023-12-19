@@ -1,0 +1,93 @@
+---
+title: "OpenAI SDK"
+description: "Use OpenAI SDK to integrate with Zella"
+---
+
+### Chat Completion
+
+Connect to the Zella AI Chat Completion API using OpenAI SDK.
+
+<CodeGroup>
+
+```python chat.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="*********", # Zella API Key
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "How do I add fallbacks in Zella?",
+        }
+    ],
+    model="zella-101-test",
+    extra_body={"platform": "zella"},
+    user="test-user",
+    stream=False,
+)
+print(chat_completion)
+```
+
+</CodeGroup>
+
+### Chat Completion with streaming
+
+To enable streaming responses, simply set the 'stream' attribute to True in the response object.
+This feature is available only if the underlying model platform supports streaming. Below is a
+sample implementation:
+
+<CodeGroup>
+
+```python chat_stream.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="*********", # Zella API Key
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "How do I add fallbacks in Zella?",
+        }
+    ],
+    model="gpt-4",
+    extra_body={"platform": "openai"},
+    user="test-user",
+    stream=True,
+)
+print(chat_completion)
+```
+
+</CodeGroup>
+
+### Embeddings
+
+Transform text into insightful vectors with Zella,
+utilizing a range of embedding models and platforms for diverse applications.
+
+<CodeGroup>
+
+```python embedding.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="*********", # Zella API Key
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+embed_zella = client_zella.embeddings.create(
+    input=["This is a test", "another test"],
+    model="embedding-001",
+    extra_body={"platform": "google"},
+    user="test-user",
+)
+print(embed_zella)
+```
+</CodeGroup>

@@ -1,0 +1,36 @@
+---
+title: 'Configure Model'
+description: "In this step, we will see how to configure a Zella model."
+icon: "circle-2"
+---
+
+To use model parameters like temperature, top_k, top_p etc and model request configurations like fallbacks, retries etc you need to configure
+a custom model in Zella. You can do that by navigating to `Zella AI -> dashboard -> models -> configure models` page.
+
+<Warning>
+    If you have not added your platform access tokens in Zella as mentioned in the [previous step](../zella-101/setup-access), you will not be able to use your
+    configured model.
+</Warning>
+
+## Choose the primary model
+First step is to choose the base model that you want to use in this configured model. Choose your base model from the thousands of models available 
+from various platforms.
+
+## Setup fallback models
+You can setup fallback models to use when your primary models is not able to fulfill the request due to whatever reason. You can choose different fallback models
+as per your use case and fallbacks will be used in the same order as you have added them.
+
+## Add model parameters
+For all your primary and fallback models, you can add model parameters based on the action type of the model. 
+<Note>
+    Note: Dashboard parameter options represent all possibilities for a given action type, but not all models support all of them. For example, for "completion," Google Gemini supports both topK and topP, while OpenAI only supports topP. Choosing an unsupported parameter will simply skip it when sending the request.
+</Note>
+
+
+## Save it
+Let's save our configured model as `zella-101-test` and use in next steps.
+
+
+## Next steps
+
+Send your first request: [First Request](../zella-101/make-first-request).
