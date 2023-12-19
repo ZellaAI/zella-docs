@@ -27,6 +27,10 @@
   },
   "tabs": [
     {
+      "name": "SDKs",
+      "url": "sdk"
+    },
+    {
       "name": "API Reference",
       "url": "api-reference"
     }
@@ -62,12 +66,16 @@
       "pages": ["platforms/google", "platforms/openai", "platforms/huggingface"]
     },
     {
+      "group": "Get Started",
+      "pages": ["sdk/introduction"]
+    },
+    {
       "group": "Zella SDKs",
       "pages": ["sdk/python", "sdk/node"]
     },
     {
-      "group": "Other SDKs",
-      "pages": ["third-party-sdk/openai", "third-party-sdk/langchain"]
+      "group": "Supported SDKs",
+      "pages": ["sdk/third-party-sdk/openai", "sdk/third-party-sdk/langchain"]
     },
     {
       "group": "API Documentation",
