@@ -5,6 +5,13 @@ api: "POST /v1/chat/completions"
 
 # Chat Completion Request
 
+## Request Headers
+
+<ParamField body="Authorization" type="string" required="true">
+  Zella Access key generated on dashboard. [See how to generate access key](/zella-101/setup-access#get-your-access-key).
+</ParamField>
+
+
 ## Request Body Parameters
 
 <ParamField body="user" type="string">
@@ -242,6 +249,7 @@ This response will contain the model's response to the chat completion request.
 curl --request POST \
 --url https://gateway.zella.ai/v1/chat/completions \
 --header 'content-type: application/json' \
+--header 'Authorization: Bearer api_h8j3g7cc68a89sc2eod' \
 --data '{
 "user": "user_jskjf93o101",
 "model": {
