@@ -1,0 +1,161 @@
+---
+title: 'Setup Prompt'
+description: "Setup a prompt template to be used in request."
+icon: "circle-4"
+---
+
+In this step, we'll explore setting up a prompt template and utilizing it in our requests. The use of a prompt template enhances
+prompt management by providing options for variations, collaborative efforts, experimentation, and additional features.
+
+## Create a prompt template
+Head to `Zella AI -> Dashboard -> Prompts -> Templates -> Add New` and start adding your first prompt.
+
+<img
+  src="/images/setup-prompt.png"
+/>
+
+You can incorporate variables into your prompt using the syntax {"{{variable_name}}"}. In the upcoming steps, we will delve into how to effectively utilize these prompt variables.
+
+## Use a prompt template
+
+Here's a guide on how to utilize a prompt template:
+
+## REST API
+
+<CodeGroup>
+```bash OpenAI Format
+curl --request POST \
+--url https://gateway.zella.ai/v1/openai/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer api_h8j3g7cc68a89sc2eod' \
+--data '{
+    "model": "zella-101-test",
+    "prompt": {
+        "prompt_id": "mathsprompt",
+        "context": {
+            "query": "What is 3+4?"
+        }
+    },
+    "messages": []
+}'
+```
+```bash Zella Format
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer api_h8j3g7cc68a89sc2eod' \
+--data '{
+    "model": {
+        "name": "zella-101-test"
+    },
+    "prompt": {
+        "prompt_id": "mathsprompt",
+        "context": {
+            "query": "What is 3+4?"
+        }
+    }
+'
+````
+</CodeGroup>
+
+## Python SDKs
+
+<CodeGroup>
+```python Zella SDK
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+model = {
+    "name": "gpt-4"
+}
+prompt = {
+    "prompt_id": "mathsprompt",
+    "context": {
+        "query": "What is 3+4?"
+    }
+}
+response = zella_ai.chat.completions.create(model=model, prompt=prompt)
+print(response)
+```
+
+```python OpenAI SDK
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="api_q4ty3lit8qa181o4iezkr",
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+chat_completion = client.chat.completions.create(
+    messages=[],
+    model="gpt-4",
+    extra_body={
+        "prompt": {
+            "prompt_id": "mathsprompt",
+            "context": {
+                "query": "What is 3+4?"
+            }
+        }
+    }
+)
+print(chat_completion)
+```
+
+```python Langchain SDK
+from langchain.chat_models import ChatOpenAI
+
+chat = ChatOpenAI(
+    openai_api_base="https://gateway.zella.ai/v1/openai",
+    model_name="gpt-4",
+    api_key="api_q4ty3lit8qa181o4iezkr",
+    streaming=False,
+    model_kwargs={
+        "extra_body": {
+            "prompt": {
+                "prompt_id": "mathsprompt",
+                "context": {
+                    "query": "What is 3+4?"
+                }
+            }
+        }
+    }
+)
+rsp = chat([])
+print(str(rsp))
+```
+</CodeGroup>
+
+
+## Next:
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    href="/api-reference/introduction"
+    icon="circle-1"
+  >
+    Zella AI API reference
+  </Card>
+  <Card
+    title="Python SDK"
+    href="/sdk/python"
+    icon="circle-2"
+  >
+    Learn how to use Zella Python SDK.
+  </Card>
+  <Card
+    title="OpenAI SDK"
+    href="../sdk/third-party-sdk/openai"
+    icon="circle-3"
+  >
+    Use OpenAI SDK to get started with Zella with minimal code changes.
+  </Card>
+  <Card
+    title="Langchain SDK"
+    href="../sdk/third-party-sdk/langchain"
+    icon="circle-4"
+  >
+    Learn how to use Zella with Langchain SDK.
+  </Card>
+  
+</CardGroup>

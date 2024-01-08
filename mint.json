@@ -59,7 +59,7 @@
     },
     {
       "group": "Zella 101",
-      "pages": ["zella-101/get-started", "zella-101/setup-access", "zella-101/configure-model", "zella-101/make-first-request"]
+      "pages": ["zella-101/get-started", "zella-101/setup-access", "zella-101/configure-model", "zella-101/make-first-request", "zella-101/setup-prompt"]
     },
     {
       "group": "Platforms",
