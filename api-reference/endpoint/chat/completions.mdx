@@ -29,54 +29,7 @@ api: "POST /v1/chat/completions"
         <ParamField path="name" type="string" required="true">
             The name of the AI model. This should be a valid model available on the specified platform.
         </ParamField>
-        <ParamField path="timeout" type="number" required="false">
-            The timeout for the model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
-        </ParamField>
-    </Expandable>
-
-</ParamField>
-
-<ParamField body="query" type="Object" required="true">
-  Contains the query to be processed by the model.
-    <Expandable title="properties">
-        <ParamField path="messages" type="array" required="true">
-            An array of message objects to be processed by the model. Each message object should have the following properties:
-            <Expandable title="properties">
-                <ParamField path="role" type="string" required="true">
-                    The role of the message sender. This can be `user`, `system`, `assistant`, or `tool`.
-                </ParamField>
-
-                <ParamField path="content" type="string" required="true">
-                    The content of the message.
-                </ParamField>
-                <ParamField path="name" type="string" required="false">
-                    The name of the message sender.
-                </ParamField>
-                <ParamField path="tool_calls" type="array">
-                    An array of tool call objects, applicable only if the role is `tool`.
-                    <Expandable title="properties">
-                        <ParamField path="id" type="string" required="true">
-                            The unique identifier of the tool call.
-                        </ParamField>
-                        <ParamField path="type" type="string" required="true">
-                            The type of the tool call. This can be `function` or other types.
-                        </ParamField>
-                        <ParamField path="function" type="Object" required="true">
-                            The details of the function call.
-                            <Expandable title="properties">
-                                <ParamField path="name" type="string" required="true">
-                                    The name of the function to be called.
-                                </ParamField>
-                                <ParamField path="arguments" type="string" required="true">
-                                    The arguments to be passed to the function.
-                                </ParamField>
-                            </Expandable>
-                        </ParamField>
-                    </Expandable>
-                </ParamField>
-            </Expandable>
-        </ParamField>
-        <ParamField path="options" type="Object">
+        <ParamField path="config" type="Object">
             Contains any additional parameters to be used by the model.
             <Expandable title="properties">
                 <ParamField path="frequency_penalty" type="number">
@@ -120,10 +73,73 @@ api: "POST /v1/chat/completions"
 
 </ParamField>
 
+<ParamField body="prompt" type="Object">
+  Contains the prompt data to be used in the request. Required if query is not present.
+  <Expandable title="properties">
+    <ParamField path="prompt_id" type="string" required="true">
+      The role of the message sender. This can be `user`, `system`, `assistant`, or `tool`.
+    </ParamField>
+    <ParamField path="prompt_variant_id" type="string">
+      The role of the message sender. This can be `user`, `system`, `assistant`, or `tool`.
+    </ParamField>
+    <ParamField path="context" type="Object">
+      Dictionary of context variables.
+    </ParamField>
+  </Expandable>
+
+</ParamField>
+
+<ParamField body="query" type="Object">
+  Contains the query to be processed by the model.
+    <Expandable title="properties">
+        <ParamField path="messages" type="array" required="true">
+            An array of message objects to be processed by the model. Each message object should have the following properties:
+            <Expandable title="properties">
+                <ParamField path="role" type="string" required="true">
+                    The role of the message sender. This can be `user`, `system`, `assistant`, or `tool`.
+                </ParamField>
+
+                <ParamField path="content" type="string" required="true">
+                    The content of the message.
+                </ParamField>
+                <ParamField path="name" type="string">
+                    The name of the message sender.
+                </ParamField>
+                <ParamField path="tool_calls" type="array">
+                    An array of tool call objects, applicable only if the role is `tool`.
+                    <Expandable title="properties">
+                        <ParamField path="id" type="string" required="true">
+                            The unique identifier of the tool call.
+                        </ParamField>
+                        <ParamField path="type" type="string" required="true">
+                            The type of the tool call. This can be `function` or other types.
+                        </ParamField>
+                        <ParamField path="function" type="Object" required="true">
+                            The details of the function call.
+                            <Expandable title="properties">
+                                <ParamField path="name" type="string" required="true">
+                                    The name of the function to be called.
+                                </ParamField>
+                                <ParamField path="arguments" type="string" required="true">
+                                    The arguments to be passed to the function.
+                                </ParamField>
+                            </Expandable>
+                        </ParamField>
+                    </Expandable>
+                </ParamField>
+                <ParamField path="tool_call_id" type="string">
+                    Tool call that this message is responding to.
+                </ParamField>
+            </Expandable>
+        </ParamField>
+    </Expandable>
+
+</ParamField>
+
 <ParamField body="response" type="Object" required="true">
   Defines the desired response format and options.
   <Expandable title="properties">
-    <ParamField path="format" type="string" required="true">
+    <ParamField path="format" type="string">
       The format of the response. Must be one of `text` or `json_object`.
       Default is `text`.
     </ParamField>
