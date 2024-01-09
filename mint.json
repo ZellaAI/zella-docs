@@ -59,7 +59,28 @@
     },
     {
       "group": "Zella 101",
-      "pages": ["zella-101/get-started", "zella-101/setup-access", "zella-101/configure-model", "zella-101/make-first-request", "zella-101/setup-prompt"]
+      "pages": [
+        "zella-101/get-started",
+        "zella-101/setup-access",
+        {
+          "group": "Zella Models",
+          "icon": "circle-2",
+          "pages": [
+            "zella-101/models/intro",
+            "zella-101/models/configure-model",
+            "zella-101/models/use-model"
+          ]
+        },
+        {
+          "group": "Zella Prompts",
+          "icon": "circle-3",
+          "pages": [
+            "zella-101/prompts/intro",
+            "zella-101/prompts/configure-prompt",
+            "zella-101/prompts/use-prompt"
+          ]
+        }
+      ]
     },
     {
       "group": "Platforms",

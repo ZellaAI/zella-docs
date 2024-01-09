@@ -25,12 +25,11 @@ api: 'POST /v1/embeddings'
             The AI platform used for the model. This is an optional field, only required when using models which
             are not listed in Zella dashboard.
         </ParamField>
-
         <ParamField path="name" type="string" required="true">
             The name of the AI model. This should be a valid model available on the specified platform.
         </ParamField>
-        <ParamField path="timeout" type="number" required="false">
-            The timeout for the model in milliseconds. Default is 60000. Must be an integer greater than -1 and less than 10 minutes (600000).
+        <ParamField path="api_key" type="string">
+            Platform API key. Not required if platform already configured in the dashboard.
         </ParamField>
     </Expandable>
 

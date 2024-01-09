@@ -1,7 +1,6 @@
 ---
-title: 'First Request'
+title: 'Using Zella Model'
 description: "Let's start by sending your first chat completion request"
-icon: "circle-3"
 ---
 
 In this step, we'll utilize the platform and model `zella-101-test` configured in the earlier steps by initiating our first chat completion request. 
@@ -14,25 +13,24 @@ curl --request POST \
 --header 'content-type: application/json' \
 --header 'Authorization: Bearer api_h8j3g7cc68a89sc2eod' \
 --data '{
-"user": "user_jskjf93o101",
 "model": {
     "name": "zella-101-test"
 },
 "query": {
     "messages": [
         {
-        "role": "system",
-        "content": "You are a helpful assistant to understand how Zella works."
+            "role": "system",
+            "content": "You are a helpful assistant to understand how Zella works."
         },
         {
-        "role": "user",
-        "content": "How do I manage my models in Zella?"
+            "role": "user",
+            "content": "How do I manage my models in Zella?"
         }
     ]
 },
 "response": {
-    "stream": true
-    }
+    "stream": false
+}
 }'
 ````
 
@@ -55,7 +53,6 @@ from zella import ZellaAI
 
 zella_ai = ZellaAI(api_key="*****************")
 
-user = "2312re3r33e33"
 model = {
     "name": "zella-101-test"
 }
@@ -91,7 +88,6 @@ chat_completion = client.chat.completions.create(
         }
     ],
     model="zella-101-test", # Pass our configured model name here.
-    user="test-user",
     stream=False,
 )
 print(chat_completion)
@@ -114,4 +110,4 @@ print(chat_completion)
 
 ## Next steps
 
-Setup a prompt: [Setup Prompt](../zella-101/setup-prompt).
+Setup a prompt: [Setup Prompt](/zella-101/prompts/setup-prompt).

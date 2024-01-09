@@ -1,7 +1,6 @@
 ---
-title: 'Configure Model'
+title: 'Configure Zella Model'
 description: "In this step, we will see how to configure a Zella model."
-icon: "circle-2"
 ---
 
 To use model parameters like temperature, top_k, top_p etc and model request configurations like fallbacks, retries etc you need to configure
@@ -20,12 +19,13 @@ from various platforms.
   src="/images/setup-model.png"
 />
 
-## Setup fallback models
+## Setup fallback models and retries
 You can setup fallback models to use when your primary models is not able to fulfill the request due to whatever reason. You can choose different fallback models
-as per your use case and fallbacks will be used in the same order as you have added them.
+as per your use case and fallbacks will be used in the same order as you have added them. You have the option to set a retry count, instructing Zella on the number
+of attempts to make with the same model before proceeding to the next fallback option
 
-## Add model parameters
-For all your primary and fallback models, you can add model parameters based on the action type of the model. 
+## Add model configs
+For all your primary and fallback models, you can add model configs based on the action type of the model. 
 <Note>
     Note: Dashboard parameter options represent all possibilities for a given action type, but not all models support all of them. For example, for "completion," Google Gemini supports both topK and topP, while OpenAI only supports topP. Choosing an unsupported parameter will simply skip it when sending the request.
 </Note>
@@ -33,8 +33,3 @@ For all your primary and fallback models, you can add model parameters based on 
 
 ## Save it
 Let's save our configured model as `zella-101-test` and use in next steps.
-
-
-## Next steps
-
-Send your first request: [First Request](../zella-101/make-first-request).

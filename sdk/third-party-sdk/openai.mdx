@@ -28,7 +28,6 @@ chat_completion = client.chat.completions.create(
     # Platform is optional, only required if you are using a
     # model which is not not listed in Zella dashboard.
     extra_body={"platform": "zella"},
-    user="test-user",
     stream=False,
 )
 print(chat_completion)
@@ -60,10 +59,44 @@ chat_completion = client.chat.completions.create(
         }
     ],
     model="gpt-4",
-    user="test-user",
+    user="test-123",
     stream=True,
 )
-print(chat_completion)
+for chunk in chat_completion:
+    print(chunk)
+```
+
+</CodeGroup>
+
+### Chat Completion with Zella Prompt
+
+You can pass Zella prompt identifier using OpenAI SDK too and utilise Zella's prompt management feature.
+
+<CodeGroup>
+
+```python chat_stream.py
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="*********", # Zella API Key
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[],
+    model="gpt-4",
+    extra_body={
+        "prompt": {
+            "prompt_id": "mathsprompt",
+            "context": {
+                "query": "What is 3+4?"
+            }
+        }
+    },
+    stream=True
+)
+for chunk in chat_completion:
+    print(chunk)
 ```
 
 </CodeGroup>
