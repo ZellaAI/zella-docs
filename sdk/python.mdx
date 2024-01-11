@@ -44,10 +44,7 @@ query = {
         "content": "Hi There!"
     }]
 }
-response = {
-    "format": "json_object"
-}
-response = zella_ai.chat.completions.create(user, model, query, response)
+response = zella_ai.chat.completions.create(user=user, model=model, query=query)
 ```
 
 </CodeGroup>
@@ -80,10 +77,175 @@ query = {
     }]
 }
 response = {
-    "format": "json_object",
     "stream": True
 }
-response = zella_ai.chat.completions.create(user, model, query, response)
+response = zella_ai.chat.completions.create(user=user, model=model, query=query, response=response)
+```
+
+</CodeGroup>
+
+
+### Chat Completion with Single turn function calling
+
+Here is how to utilise LLM's functioncal calling ability. Currently only OpenAI and Google Gemini is supported for function calling:
+
+
+<CodeGroup>
+
+```python single_turn_function.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+model = {
+    "name": "gemini-pro"
+}
+query = {
+    "messages": [
+        {
+        "role": "user",
+        "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+        }
+    ]
+}
+response = {
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals",
+                "description": "Get World Cup goals of any player during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "player": {
+                            "type": "string",
+                            "description": "The name of the player"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals_team",
+                "description": "Get World Cup goals of any team during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "team": {
+                            "type": "string",
+                            "description": "The name of the team"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "preferred_tool": {
+        "type": "function",
+        "function": {
+            "name":"get_world_cup_goals"
+        }
+    }
+}
+response = zella_ai.chat.completions.create(model=model, query=query, response=response)
+```
+
+```python multi_turn_function.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+model = {
+    "name": "gemini-pro"
+}
+query = {
+    "messages": [
+        {
+            "role": "user",
+            "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+        },
+        {
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "id": "call_A3OsZgm7LQkIORtW6yiJXmpf",
+                    "type": "function",
+                    "function": {
+                        "name": "get_world_cup_goals",
+                        "arguments": "{\"player\":\"Ronaldo\",\"year\":\"2022\"}"
+                    }
+                }
+            ]
+        },
+    {
+        "role": "tool",
+        "content": "{\"goals\": 10}",
+        "tool_call_id": "call_A3OsZgm7LQkIORtW6yiJXmpf"
+    }
+    ]
+}
+response = {
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals",
+                "description": "Get World Cup goals of any player during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "player": {
+                            "type": "string",
+                            "description": "The name of the player"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals_team",
+                "description": "Get World Cup goals of any team during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "team": {
+                            "type": "string",
+                            "description": "The name of the team"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "preferred_tool": {
+        "type": "function",
+        "function": {
+            "name":"get_world_cup_goals"
+        }
+    }
+}
+response = zella_ai.chat.completions.create(model=model, query=query, response=response)
 ```
 
 </CodeGroup>
@@ -110,7 +272,7 @@ query = {
 response = {
     "format": "float"
 }
-response = zella_ai.embedding.embed(user, model, query, response)
+response = zella_ai.embedding.embed(user=user, model=model, query=query, response=response)
 ```
 
 </CodeGroup>

@@ -79,7 +79,8 @@
             "zella-101/prompts/configure-prompt",
             "zella-101/prompts/use-prompt"
           ]
-        }
+        },
+        "zella-101/function-calling"
       ]
     },
     {

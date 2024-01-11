@@ -67,7 +67,7 @@ query = {
 response = {
     "format": "json_object"
 }
-response = zella_ai.chat.completions.create(user, model, query, response)
+response = zella_ai.chat.completions.create(user=user, model=model, query=query, response=response)
 ```
 
 </CodeGroup>
@@ -111,7 +111,7 @@ query = {
 response = {
     "stream": False
 }
-response = zella_ai.completions.create(user, model, query, response)
+response = zella_ai.completions.create(user=user, model=model, query=query, response=response)
 ```
 
 </CodeGroup>
@@ -154,6 +154,6 @@ query = {
 response = {
     "format": "float"
 }
-response = zella_ai.embedding.embed(user, model, query, response)
+response = zella_ai.embedding.embed(user=user, model=model, query=query, response=response)
 ```
 </CodeGroup>

@@ -181,10 +181,7 @@ api: "POST /v1/chat/completions"
               The description of the function.
             </ParamField>
             <ParamField path="parameters" type="Object">
-              The parameters of the function.
-              <ParamField path="<parameter>" type="any">
-                The parameter name and type.
-              </ParamField>
+              Function parameters in an OpenAPI compatible schema.
             </ParamField>
           </Expandable>
         </ParamField>
@@ -273,12 +270,12 @@ This response will contain the model's response to the chat completion request.
 </ResponseField>
 
 <RequestExample>
-```bash Curl
+```bash Default
 
 curl --request POST \
 --url https://gateway.zella.ai/v1/chat/completions \
 --header 'content-type: application/json' \
---header 'Authorization: Bearer api_h8j3g7cc68a89sc2eod' \
+--header 'Authorization: Bearer <zella-token>' \
 --data '{
 "user": "user_jskjf93o101",
 "model": {
@@ -305,36 +302,163 @@ curl --request POST \
 
 ````
 
-```python Python
-
-# Create Request Parameters
-user = "user_jskjf93o101"
-model = {
-    "platform": "openai",
-    "name": "gpt-3.5-turbo"
-}
-query = {
-    "messages": [ {
-        "role": "system",
-        "content": "You are a helpful assistant to help design api structure"
+```bash FunctionCalling
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "model": {
+        "name": "gpt-4"
     },
-    {
-        "role": "user",
-        "content": "Hi There!"
-    }]
-}
-response = {
-    "format": "json_object",
-    "stream": True
-}
+    "query": {
+        "messages": [
+            {
+            "role": "user",
+            "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+            }
+        ]
+    },
+    "response": {
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals",
+                    "description": "Get World Cup goals of any player during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "player": {
+                                "type": "string",
+                                "description": "The name of the player"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals_team",
+                    "description": "Get World Cup goals of any team during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "team": {
+                                "type": "string",
+                                "description": "The name of the team"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "preferred_tool": {
+            "type": "function",
+            "function": {
+                "name":"get_world_cup_goals"
+            }
+        }
+    }
+}'
+````
 
-# Call API
-stream = zella_ai.chat.completions.create(user, model, query, response)
-
-# Iterate over stream
-for chunk in stream:
-    if chunk:
-        print(chunk)
+```bash MultiTurn-FunctionCalling
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "user": "user_jskjf93o101",
+    "model": {
+        "name": "gemini-pro"
+    },
+    "query": {
+        "messages": [
+            {
+              "role": "user",
+              "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+            },
+            {
+              "role": "assistant",
+              "tool_calls": [
+                  {
+                      "id": "call_A3OsZgm7LQkIORtW6yiJXmpf",
+                      "type": "function",
+                      "function": {
+                          "name": "get_world_cup_goals",
+                          "arguments": "{\"player\":\"Ronaldo\",\"year\":\"2022\"}"
+                      }
+                  }
+              ]
+            },
+        {
+            "role": "tool",
+            "content": "{\"goals\": 10}",
+            "tool_call_id": "call_A3OsZgm7LQkIORtW6yiJXmpf"
+        }
+        ]
+    },
+    "response": {
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals",
+                    "description": "Get World Cup goals of any player during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "player": {
+                                "type": "string",
+                                "description": "The name of the player"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals_team",
+                    "description": "Get World Cup goals of any team during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "team": {
+                                "type": "string",
+                                "description": "The name of the team"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "preferred_tool": {
+            "type": "function",
+            "function": {
+                "name":"get_world_cup_goals"
+            }
+        }
+    }
+}'
 ````
 
 </RequestExample>
