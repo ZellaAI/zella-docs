@@ -1,0 +1,518 @@
+---
+title: "Function Calling"
+description: "All about function calling with Zella"
+icon: "circle-4"
+---
+
+## Introduction
+
+Function calling in LLMs, or large language models, refers to the ability of these models to interact
+with external functions within their processing. This allows them to access and utilize specialized
+algorithms, APIs, or even other LLMs to expand their capabilities. Think of it as giving them "tools"
+to work with beyond their own internal knowledge and language processing.
+
+Here's how it works:
+
+1. Function Definition: You define a function outside the LLM, specifying its name, parameters, and what it does.
+2. Prompting the LLM: You provide the LLM with a prompt that includes both the user query and the relevant
+function information. This might involve describing the function, its purpose, and how it applies to the query.
+3. Model Output: The LLM analyzes the prompt and determines whether it can utilize the defined function
+to answer the user's question. If so, it generates a JSON object containing the arguments needed to call
+the function.
+4. External Execution: This JSON object is then used the user to actually call the external function,
+retrieving its output.
+5. Response Generation: User passes the retrieved output of the function back to the LLM to create a
+more comprehensive and relevant answer.
+
+## Single Turn Function Calling
+Single-turn is when you call the language model one time. With function calling, a single-turn use case might
+be when you provide the model a natural language query and a list of functions. In this case, the model uses
+the function declaration, which includes the function name, parameters, and description, to predict which function to call and the arguments to call it with.
+
+### Single Turn Function Calling With Zella
+
+<CodeGroup>
+
+
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "model": {
+        "name": "gpt-4"
+    },
+    "query": {
+        "messages": [
+            {
+            "role": "user",
+            "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+            }
+        ]
+    },
+    "response": {
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals",
+                    "description": "Get World Cup goals of any player during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "player": {
+                                "type": "string",
+                                "description": "The name of the player"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals_team",
+                    "description": "Get World Cup goals of any team during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "team": {
+                                "type": "string",
+                                "description": "The name of the team"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "preferred_tool": {
+            "type": "function",
+            "function": {
+                "name":"get_world_cup_goals"
+            }
+        }
+    }
+}'
+```
+
+```python Zella SDK
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+model = {
+    "name": "gemini-pro"
+}
+query = {
+    "messages": [
+        {
+        "role": "user",
+        "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+        }
+    ]
+}
+response = {
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals",
+                "description": "Get World Cup goals of any player during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "player": {
+                            "type": "string",
+                            "description": "The name of the player"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals_team",
+                "description": "Get World Cup goals of any team during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "team": {
+                            "type": "string",
+                            "description": "The name of the team"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "preferred_tool": {
+        "type": "function",
+        "function": {
+            "name":"get_world_cup_goals"
+        }
+    }
+}
+response = zella_ai.chat.completions.create(model=model, query=query, response=response)
+```
+
+```python OpenAI SDK
+from openai import OpenAI
+
+
+client = OpenAI(
+    api_key="<zella-token>",
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_world_cup_goals",
+            "description": "Get World Cup goals of any player during a given year.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "year": {
+                        "type": "string",
+                        "description": "The year of world cup"
+                    },
+                    "player": {
+                        "type": "string",
+                        "description": "The name of the player"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_world_cup_goals_team",
+            "description": "Get World Cup goals of any team during a given year.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "year": {
+                        "type": "string",
+                        "description": "The year of world cup"
+                    },
+                    "team": {
+                        "type": "string",
+                        "description": "The name of the team"
+                    }
+                }
+            }
+        }
+    }
+]
+chat_completion = client.chat.completions.create(
+    messages=[{
+            "role": "user",
+            "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+            }],
+    model="gemini-pro",
+    tools=tools,
+    tool_choice='auto'
+)
+print(chat_completion)
+```
+
+</CodeGroup>
+
+
+## Multi Turn Function Calling
+Steps for multi-turn function calling:
+
+First turn: Call the language model with your initial query and a description of the desired function. Include the details mentioned in the single-turn request above.
+
+Second turn: Execute the function that the language model suggests in its first-turn response. Then, send the output back to the language model.
+
+From the second turn's response:
+- You may receive a summary of the results, directly answering your original query.
+- Or, the response might suggest a second function call to gather more information.
+
+
+### Multi Turn Function Calling With Zella
+
+<CodeGroup>
+
+
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "user": "user_jskjf93o101",
+    "model": {
+        "name": "gemini-pro"
+    },
+    "query": {
+        "messages": [
+            {
+              "role": "user",
+              "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+            },
+            {
+              "role": "assistant",
+              "tool_calls": [
+                  {
+                      "id": "call_A3OsZgm7LQkIORtW6yiJXmpf",
+                      "type": "function",
+                      "function": {
+                          "name": "get_world_cup_goals",
+                          "arguments": "{\"player\":\"Ronaldo\",\"year\":\"2022\"}"
+                      }
+                  }
+              ]
+            },
+        {
+            "role": "tool",
+            "content": "{\"goals\": 10}",
+            "tool_call_id": "call_A3OsZgm7LQkIORtW6yiJXmpf"
+        }
+        ]
+    },
+    "response": {
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals",
+                    "description": "Get World Cup goals of any player during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "player": {
+                                "type": "string",
+                                "description": "The name of the player"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_world_cup_goals_team",
+                    "description": "Get World Cup goals of any team during a given year.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "year": {
+                                "type": "string",
+                                "description": "The year of world cup"
+                            },
+                            "team": {
+                                "type": "string",
+                                "description": "The name of the team"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "preferred_tool": {
+            "type": "function",
+            "function": {
+                "name":"get_world_cup_goals"
+            }
+        }
+    }
+}'
+````
+
+```python Zella SDK
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+model = {
+    "name": "gemini-pro"
+}
+query = {
+    "messages": [
+        {
+        "role": "user",
+        "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+        },
+        {
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "id": "call_A3OsZgm7LQkIORtW6yiJXmpf",
+                    "type": "function",
+                    "function": {
+                        "name": "get_world_cup_goals",
+                        "arguments": "{\"player\":\"Ronaldo\",\"year\":\"2022\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"goals\": 10}",
+            "tool_call_id": "call_A3OsZgm7LQkIORtW6yiJXmpf"
+        }
+    ]
+}
+response = {
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals",
+                "description": "Get World Cup goals of any player during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "player": {
+                            "type": "string",
+                            "description": "The name of the player"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_world_cup_goals_team",
+                "description": "Get World Cup goals of any team during a given year.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "year": {
+                            "type": "string",
+                            "description": "The year of world cup"
+                        },
+                        "team": {
+                            "type": "string",
+                            "description": "The name of the team"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "preferred_tool": {
+        "type": "function",
+        "function": {
+            "name":"get_world_cup_goals"
+        }
+    }
+}
+response = zella_ai.chat.completions.create(model=model, query=query, response=response)
+```
+
+```python OpenAI SDK
+from openai import OpenAI
+
+
+client = OpenAI(
+    api_key="<zella-token>",
+    base_url="https://gateway.zella.ai/v1/openai"
+)
+
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_world_cup_goals",
+            "description": "Get World Cup goals of any player during a given year.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "year": {
+                        "type": "string",
+                        "description": "The year of world cup"
+                    },
+                    "player": {
+                        "type": "string",
+                        "description": "The name of the player"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_world_cup_goals_team",
+            "description": "Get World Cup goals of any team during a given year.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "year": {
+                        "type": "string",
+                        "description": "The year of world cup"
+                    },
+                    "team": {
+                        "type": "string",
+                        "description": "The name of the team"
+                    }
+                }
+            }
+        }
+    }
+]
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "How many goals did Ronaldo score in 2022 FIFA World Cup?"
+        },
+        {
+            "role": "assistant",
+            "tool_calls": [
+                {
+                    "id": "call_A3OsZgm7LQkIORtW6yiJXmpf",
+                    "type": "function",
+                    "function": {
+                        "name": "get_world_cup_goals",
+                        "arguments": "{\"player\":\"Ronaldo\",\"year\":\"2022\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"goals\": 10}",
+            "tool_call_id": "call_A3OsZgm7LQkIORtW6yiJXmpf"
+        }
+    ],
+    model="gemini-pro",
+    tools=tools,
+    tool_choice='auto'
+)
+print(chat_completion)
+```
+
+</CodeGroup>
