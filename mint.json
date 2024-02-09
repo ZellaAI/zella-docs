@@ -1,129 +1,138 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
-  "name": "ZellaAI Documentation : Integrate, Experiment, & Fine-tune AI Platforms at Scale",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
-  "favicon": "/favicon.svg",
-  "colors": {
-    "primary": "#2DC484",
-    "light": "#52EAAC",
-    "dark": "#007946",
-    "anchors": {
-      "from": "#007946",
-      "to": "#52EAAC"
-    }
-  },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:support@zella.ai"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://zella.ai/dashboard"
-  },
-  "tabs": [
-    {
-      "name": "SDKs",
-      "url": "sdk"
-    },
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Dashboard",
-      "icon": "book-open-cover",
-      "url": "https://zella.ai/dashboard"
-    },
-    {
-      "name": "Service Status",
-      "icon": "shield-check",
-      "url": "https://status.zella.ai"
-    },
-    {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://discord.gg/ktMGDfM64n"
-    }
-  ],
-  "navigation": [
-    {
-      "group": "Get Started",
-      "pages": ["introduction", "what-is"]
-    },
-    {
-      "group": "Zella 101",
-      "pages": [
-        "zella-101/get-started",
-        "zella-101/setup-access",
-        {
-          "group": "Zella Models",
-          "icon": "circle-2",
-          "pages": [
-            "zella-101/models/intro",
-            "zella-101/models/configure-model",
-            "zella-101/models/use-model"
-          ]
-        },
-        {
-          "group": "Zella Prompts",
-          "icon": "circle-3",
-          "pages": [
-            "zella-101/prompts/intro",
-            "zella-101/prompts/configure-prompt",
-            "zella-101/prompts/use-prompt"
-          ]
-        },
-        "zella-101/function-calling"
-      ]
-    },
-    {
-      "group": "Platforms",
-      "pages": ["platforms/google", "platforms/openai", "platforms/huggingface"]
-    },
-    {
-      "group": "Get Started",
-      "pages": ["sdk/introduction"]
-    },
-    {
-      "group": "Zella SDKs",
-      "pages": ["sdk/python", "sdk/node"]
-    },
-    {
-      "group": "Supported SDKs",
-      "pages": ["sdk/third-party-sdk/openai", "sdk/third-party-sdk/langchain"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
-    {
-      "group": "Endpoints",
-      "pages": [
-        "api-reference/endpoint/chat/completions",
-        "api-reference/endpoint/completions",
-        "api-reference/endpoint/embeddings"
-      ]
-    }
-  ],
-  "api": {
-    "baseUrl": "https://gateway.zella.ai",
-    "auth": {
-      "method": "bearer"
-    },
-    "playground": {
-      "mode": "show"
-    }
-  },
-  "footerSocials": {
-    "twitter": "https://twitter.com/AskZellaAI",
-    "github": "https://github.com/ZellaAI",
-    "linkedin": "https://www.linkedin.com/company/AskZellaAi"
-  }
+	"$schema": "https://mintlify.com/schema.json",
+	"name": "ZellaAI Documentation : Integrate, Experiment, & Fine-tune AI Platforms at Scale",
+	"logo": {
+		"dark": "/logo/dark.svg",
+		"light": "/logo/light.svg"
+	},
+	"favicon": "/favicon.svg",
+	"colors": {
+		"primary": "#2DC484",
+		"light": "#52EAAC",
+		"dark": "#007946",
+		"anchors": {
+			"from": "#007946",
+			"to": "#52EAAC"
+		}
+	},
+	"topbarLinks": [
+		{
+			"name": "Support",
+			"url": "mailto:support@zella.ai"
+		}
+	],
+	"topbarCtaButton": {
+		"name": "Dashboard",
+		"url": "https://zella.ai/dashboard"
+	},
+	"tabs": [
+		{
+			"name": "SDKs",
+			"url": "sdk"
+		},
+		{
+			"name": "API Reference",
+			"url": "api-reference"
+		}
+	],
+	"anchors": [
+		{
+			"name": "Dashboard",
+			"icon": "book-open-cover",
+			"url": "https://zella.ai/dashboard"
+		},
+		{
+			"name": "Service Status",
+			"icon": "shield-check",
+			"url": "https://status.zella.ai"
+		},
+		{
+			"name": "Community",
+			"icon": "discord",
+			"url": "https://discord.gg/ktMGDfM64n"
+		}
+	],
+	"navigation": [
+		{
+			"group": "Get Started",
+			"pages": ["introduction", "what-is"]
+		},
+		{
+			"group": "Zella 101",
+			"pages": [
+				"zella-101/get-started",
+				"zella-101/setup-access",
+				{
+					"group": "Zella Models",
+					"icon": "circle-2",
+					"pages": [
+						"zella-101/models/intro",
+						"zella-101/models/configure-model",
+						"zella-101/models/use-model"
+					]
+				},
+				{
+					"group": "Zella Prompts",
+					"icon": "circle-3",
+					"pages": [
+						"zella-101/prompts/intro",
+						"zella-101/prompts/configure-prompt",
+						"zella-101/prompts/use-prompt"
+					]
+				},
+				{
+					"group": "Experiments",
+					"icon": "circle-4",
+					"pages": [
+						"zella-101/experiments/intro",
+						"zella-101/experiments/create-experiment",
+						"zella-101/experiments/running-experiment"
+					]
+				},
+				"zella-101/function-calling"
+			]
+		},
+		{
+			"group": "Platforms",
+			"pages": ["platforms/google", "platforms/openai", "platforms/huggingface"]
+		},
+		{
+			"group": "Get Started",
+			"pages": ["sdk/introduction"]
+		},
+		{
+			"group": "Zella SDKs",
+			"pages": ["sdk/python", "sdk/node"]
+		},
+		{
+			"group": "Supported SDKs",
+			"pages": ["sdk/third-party-sdk/openai", "sdk/third-party-sdk/langchain"]
+		},
+		{
+			"group": "API Documentation",
+			"pages": ["api-reference/introduction"]
+		},
+		{
+			"group": "Endpoints",
+			"pages": [
+				"api-reference/endpoint/chat/completions",
+				"api-reference/endpoint/completions",
+				"api-reference/endpoint/embeddings"
+			]
+		}
+	],
+	"api": {
+		"baseUrl": "https://gateway.zella.ai",
+		"auth": {
+			"method": "bearer"
+		},
+		"playground": {
+			"mode": "show"
+		}
+	},
+	"footerSocials": {
+		"twitter": "https://twitter.com/AskZellaAI",
+		"github": "https://github.com/ZellaAI",
+		"linkedin": "https://www.linkedin.com/company/AskZellaAi"
+	}
 }
