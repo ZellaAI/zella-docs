@@ -1,7 +1,7 @@
 ---
-title: "Function Calling"
-description: "All about function calling with Zella"
-icon: "circle-4"
+title: 'Function Calling'
+description: 'All about function calling with Zella'
+icon: 'circle-5'
 ---
 
 ## Introduction
@@ -15,16 +15,17 @@ Here's how it works:
 
 1. Function Definition: You define a function outside the LLM, specifying its name, parameters, and what it does.
 2. Prompting the LLM: You provide the LLM with a prompt that includes both the user query and the relevant
-function information. This might involve describing the function, its purpose, and how it applies to the query.
+   function information. This might involve describing the function, its purpose, and how it applies to the query.
 3. Model Output: The LLM analyzes the prompt and determines whether it can utilize the defined function
-to answer the user's question. If so, it generates a JSON object containing the arguments needed to call
-the function.
+   to answer the user's question. If so, it generates a JSON object containing the arguments needed to call
+   the function.
 4. External Execution: This JSON object is then used the user to actually call the external function,
-retrieving its output.
+   retrieving its output.
 5. Response Generation: User passes the retrieved output of the function back to the LLM to create a
-more comprehensive and relevant answer.
+   more comprehensive and relevant answer.
 
 ## Single Turn Function Calling
+
 Single-turn is when you call the language model one time. With function calling, a single-turn use case might
 be when you provide the model a natural language query and a list of functions. In this case, the model uses
 the function declaration, which includes the function name, parameters, and description, to predict which function to call and the arguments to call it with.
@@ -32,7 +33,6 @@ the function declaration, which includes the function name, parameters, and desc
 ### Single Turn Function Calling With Zella
 
 <CodeGroup>
-
 
 ```bash Curl
 curl --request POST \
@@ -238,8 +238,8 @@ print(chat_completion)
 
 </CodeGroup>
 
-
 ## Multi Turn Function Calling
+
 Steps for multi-turn function calling:
 
 First turn: Call the language model with your initial query and a description of the desired function. Include the details mentioned in the single-turn request above.
@@ -247,14 +247,13 @@ First turn: Call the language model with your initial query and a description of
 Second turn: Execute the function that the language model suggests in its first-turn response. Then, send the output back to the language model.
 
 From the second turn's response:
+
 - You may receive a summary of the results, directly answering your original query.
 - Or, the response might suggest a second function call to gather more information.
-
 
 ### Multi Turn Function Calling With Zella
 
 <CodeGroup>
-
 
 ```bash Curl
 curl --request POST \
@@ -343,7 +342,7 @@ curl --request POST \
         }
     }
 }'
-````
+```
 
 ```python Zella SDK
 from zella import ZellaAI
