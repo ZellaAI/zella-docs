@@ -1,0 +1,42 @@
+---
+title: "Evaluation Agent"
+api: "POST /v1/agent/evaluation"
+---
+
+# Evaluation Agent Request
+
+## Request Body Parameters
+
+<ParamField body="use_case" type="string">
+  Use case to evaluate for. One of:
+  - conversation
+  - summarization
+  - code_generation
+</ParamField>
+
+<ParamField body="answer" type="string">
+  LLM generated answer.
+</ParamField>
+
+<ParamField body="question" type="string">
+  Question asked to LLM.
+</ParamField>
+
+<ParamField body="context" type="string">
+  Context passed to LLM along with the question.
+</ParamField>
+
+<RequestExample>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/agent/evaluation \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "use_case": "conversation",
+    "question": "How to measure GPT quality?",
+    "answer": "Measure answer faithfulness by checking how many of the generated tokens are present in context.",
+    "context": "A classical yet predictive way to assess the faithfulness of a generated answer to a given context is to measure how many tokens in the generated answer are also present in the retrieved context."
+}'
+```
+</RequestExample>
