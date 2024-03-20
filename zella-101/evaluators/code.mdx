@@ -1,0 +1,53 @@
+---
+title: "Code Evaluator"
+description: "The Code Evaluator in Zella AI stands as a 
+cornerstone for developers seeking precise control and evaluation of 
+their AI implementations. This specialized evaluator offers a unique approach, where evaluation is entirely driven by the logic and intricacies embedded within the provided code. It serves as a powerful tool for developers to meticulously assess the performance, correctness, and efficiency of their AI solutions.
+"
+---
+
+## What is the Code Evaluator?
+The Code Evaluator in Zella AI epitomizes a monumental shift in evaluation methodologies, where the outcome, correctness score, and feedback are exclusively determined by the execution of the code within the evaluator. This empowers developers to customize evaluations to precisely match specific use cases, ensuring seamless alignment with organizational objectives and desired outcomes.
+
+## Key Features of the Code Evaluator
+* **Customizable Logic**: Developers have the freedom to define evaluation criteria and logic according to their requirements.
+* **Precision Evaluation**: Evaluation results are meticulously determined based on the execution of the provided code, ensuring granular assessment.
+
+## Create Evaluator Page
+
+Navigate to Zella AI -> Dashboard -> Analysis -> Evaluation. For first-time users, a selection of templates awaits, catering to diverse needs. Opt for the template labeled with `Code` as the type; alternatively, locate the button at the top right corner marked Create Evaluation, and proceed to select code.
+
+The initial step entails bestowing the evaluator with a name, description, and fundamental code. In the absence of custom `code`, you can employ the given code as an illustrative example and proceed to the subsequent step.
+
+```js
+// Example Evaluator Code
+
+// Evaluate the response 
+
+if (global.responsePrimary.includes("desiredKeyword")) {
+    // If the response contains the desired keyword, assign a high correctness score
+    global.correctnessScore = 0.9;
+    global.result = true; // Pass the evaluation
+    global.feedbacks = ["Positive"];
+} else {
+    // If the response does not meet the criteria, assign a low correctness score
+    global.correctnessScore = 0.3;
+    global.result = false; // Fail the evaluation
+    global.feedbacks = ["Negative"];
+}
+```
+
+<Warning>
+You have to make sure that code must have given variables otherwise evaluation won't work.
+1. `result`: This is boolean field that wil be used to determine result, if it is `true` then evalution is passed and failed otherwise.
+2. `correctnessScore`: A floating value field having value between 0 and 1. This will help to determine by how much extent, evaluation is correct.
+3. `feedbacks`: A string that will be used to provide feedback.
+</Warning>
+
+<img src="/images/evaluators/code/step-1.png" />
+
+## Select Target
+
+After creating a code evaluator, You can attach multiple routers and prompts so that when they get used, that evaluator can evaluate the response.
+
+<img src="/images/evaluators/code/step-2.png" />

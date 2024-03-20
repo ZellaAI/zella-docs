@@ -55,7 +55,10 @@
 	"navigation": [
 		{
 			"group": "Get Started",
-			"pages": ["introduction", "what-is"]
+			"pages": [
+				"introduction",
+				"what-is"
+			]
 		},
 		{
 			"group": "Zella 101",
@@ -89,28 +92,51 @@
 						"zella-101/experiments/running-experiment"
 					]
 				},
+				{
+					"group": "Evaluators",
+					"icon": "circle-5",
+					"pages": [
+						"zella-101/evaluators/intro",
+						"zella-101/evaluators/code",
+						"zella-101/evaluators/llm"
+					]
+				},
 				"zella-101/function-calling"
 			]
 		},
 		{
 			"group": "Platforms",
-			"pages": ["platforms/google", "platforms/openai", "platforms/huggingface"]
+			"pages": [
+				"platforms/google",
+				"platforms/openai",
+				"platforms/huggingface"
+			]
 		},
 		{
 			"group": "Get Started",
-			"pages": ["sdk/introduction"]
+			"pages": [
+				"sdk/introduction"
+			]
 		},
 		{
 			"group": "Zella SDKs",
-			"pages": ["sdk/python", "sdk/node"]
+			"pages": [
+				"sdk/python",
+				"sdk/node"
+			]
 		},
 		{
 			"group": "Supported SDKs",
-			"pages": ["sdk/third-party-sdk/openai", "sdk/third-party-sdk/langchain"]
+			"pages": [
+				"sdk/third-party-sdk/openai",
+				"sdk/third-party-sdk/langchain"
+			]
 		},
 		{
 			"group": "API Documentation",
-			"pages": ["api-reference/introduction"]
+			"pages": [
+				"api-reference/introduction"
+			]
 		},
 		{
 			"group": "Endpoints",
