@@ -103,7 +103,15 @@
 						"zella-101/evaluators/content-moderation"
 					]
 				},
-				"zella-101/function-calling"
+				"zella-101/function-calling",
+				{
+					"group": "Agents",
+					"icon": "circle-5",
+					"pages": [
+						"zella-101/agents/intro",
+						"zella-101/agents/evaluation"
+					]
+				}
 			]
 		},
 		{
@@ -145,7 +153,8 @@
 			"pages": [
 				"api-reference/endpoint/chat/completions",
 				"api-reference/endpoint/completions",
-				"api-reference/endpoint/embeddings"
+				"api-reference/endpoint/embeddings",
+				"api-reference/endpoint/agent/evaluation"
 			]
 		}
 	],

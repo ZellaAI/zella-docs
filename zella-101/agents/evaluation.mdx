@@ -1,0 +1,42 @@
+---
+title: "Evaluation Agent"
+description: "The Zella AI evaluation agent assesses the quality, correctness, and safety of a provided question, answer,
+and context. By analyzing these elements, the agent generates scores that reflect the overall reliability and appropriateness
+of the content. This evaluation process ensures that the information being examined meets predefined standards for accuracy,
+relevance, and safety. With the Zella AI evaluation agent, users can confidently assess the integrity and suitability of their content,
+enabling them to make informed decisions and maintain a high level of quality in their outputs.
+"
+---
+
+## How to use evaluation agent?
+
+<CodeGroup>
+
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/agent/evaluation \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer <zella-token>' \
+--data '{
+    "use_case": "conversation",
+    "question": "How to measure GPT quality?",
+    "answer": "Measure answer faithfulness by checking how many of the generated tokens are present in context.",
+    "context": "A classical yet predictive way to assess the faithfulness of a generated answer to a given context is to measure how many tokens in the generated answer are also present in the retrieved context."
+}'
+```
+
+</CodeGroup>
+
+## Use cases supported
+
+
+As of now, the Evaluation Agent provided by Zella AI supports only the conversation use case. This means that it is specifically designed to evaluate the quality, correctness,
+and safety of conversations, including questions, answers, and context.
+
+## Metrics returned
+
+The Evaluation Agent computes and returns metrics for:
+
+ - Answer Relevancy: How well the answer matches the question.
+ - Context Quality: How suitable the context is for the question.
+ - Answer Faithfulness: How closely the answer relates to the provided context.
