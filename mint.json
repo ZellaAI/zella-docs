@@ -98,7 +98,9 @@
 					"pages": [
 						"zella-101/evaluators/intro",
 						"zella-101/evaluators/code",
-						"zella-101/evaluators/llm"
+						"zella-101/evaluators/llm",
+						"zella-101/evaluators/content-quality",
+						"zella-101/evaluators/content-moderation"
 					]
 				},
 				"zella-101/function-calling"
