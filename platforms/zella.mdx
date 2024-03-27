@@ -1,0 +1,74 @@
+---
+title: Zella
+description: 'Discover a range of open weight models curated by Zella to empower your projects.
+Easily integrate these models using Zella Gateway.'
+---
+
+## Get Started
+
+Begin by setting up an account on [Zella AI](https://zella.ai/).
+Our open-source models are seamlessly integrated into our platform, requiring no complex integration.
+With transparent token-based pricing, you only pay for what you use. Explore diverse models, configure
+them effortlessly, and unleash AI capabilities in your projects today!
+
+## Supported Features
+
+### Chat Completion
+
+<CodeGroup>
+```bash Curl
+curl --request POST \
+--url https://gateway.zella.ai/v1/chat/completions \
+--header 'content-type: application/json, authentication: Bearer **********' \
+--data '{
+"user": "user_jskjf93o101",
+"model": {
+    "platform": "zella",
+    "name": "meta-llama/Llama-2-7b-chat-hf"
+},
+"query": {
+    "messages": [
+        {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+        },
+        {
+        "role": "user",
+        "content": "Hi There!"
+        }
+    ]
+},
+"response": {
+    "format": "json_object",
+    "stream": true
+    }
+}'
+````
+
+```python Python
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*****************")
+
+user = "2312re3r33e33"
+model = {
+    "platform": "zella",
+    "name": "meta-llama/Llama-2-7b-chat-hf"
+}
+query = {
+    "messages": [ {
+        "role": "system",
+        "content": "You are a helpful assistant to help design api structure"
+    },
+    {
+        "role": "user",
+        "content": "Hi There!"
+    }]
+}
+response = {
+    "format": "json_object"
+}
+response = zella_ai.chat.completions.create(user=user, model=model, query=query, response=response)
+```
+
+</CodeGroup>

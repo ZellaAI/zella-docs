@@ -66,12 +66,12 @@
 				"zella-101/get-started",
 				"zella-101/setup-access",
 				{
-					"group": "Zella Models",
+					"group": "Zella Routers",
 					"icon": "circle-2",
 					"pages": [
-						"zella-101/models/intro",
-						"zella-101/models/configure-model",
-						"zella-101/models/use-model"
+						"zella-101/routers/intro",
+						"zella-101/routers/configure-router",
+						"zella-101/routers/use-router"
 					]
 				},
 				{
@@ -106,10 +106,19 @@
 				"zella-101/function-calling",
 				{
 					"group": "Agents",
-					"icon": "circle-5",
+					"icon": "circle-7",
+					"pages": ["zella-101/agents/intro", "zella-101/agents/evaluation"]
+				},
+				"zella-101/jobs",
+				"zella-101/datasets",
+				"zella-101/team",
+				{
+					"group": "Analytics",
+					"icon": "chart-mixed",
 					"pages": [
-						"zella-101/agents/intro",
-						"zella-101/agents/evaluation"
+						"zella-101/analytics/gateway",
+						"zella-101/analytics/inference",
+						"zella-101/analytics/quality"
 					]
 				}
 			]
@@ -117,6 +126,7 @@
 		{
 			"group": "Platforms",
 			"pages": [
+				"platforms/zella",
 				"platforms/google",
 				"platforms/openai",
 				"platforms/huggingface"
