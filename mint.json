@@ -106,7 +106,7 @@
 				"zella-101/function-calling",
 				{
 					"group": "Agents",
-					"icon": "circle-6",
+					"icon": "circle-7",
 					"pages": ["zella-101/agents/intro", "zella-101/agents/evaluation"]
 				},
 				"zella-101/jobs",
@@ -114,7 +114,7 @@
 				"zella-101/team",
 				{
 					"group": "Analytics",
-					"icon": "circle-arrow-right",
+					"icon": "chart-mixed",
 					"pages": [
 						"zella-101/analytics/gateway",
 						"zella-101/analytics/inference",
