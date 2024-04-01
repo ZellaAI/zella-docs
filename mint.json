@@ -164,7 +164,8 @@
 				"api-reference/endpoint/chat/completions",
 				"api-reference/endpoint/completions",
 				"api-reference/endpoint/embeddings",
-				"api-reference/endpoint/agent/evaluation"
+				"api-reference/endpoint/agent/evaluation",
+				"api-reference/endpoint/push-messages"
 			]
 		}
 	],
