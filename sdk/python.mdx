@@ -276,3 +276,33 @@ response = zella_ai.embedding.embed(user=user, model=model, query=query, respons
 ```
 
 </CodeGroup>
+
+
+### Push Messages
+
+Push messages to Zella for analytics and evaluation.
+
+<CodeGroup>
+
+```python log.py
+from zella import ZellaAI
+
+zella_ai = ZellaAI(api_key="*************")
+
+input = [{
+    "role": "system",
+    "content": "You are a maths teacher!"
+}, {
+    "role": "user",
+    "content": "What is 2+2?"
+}]
+output = "4."
+model = {
+    "platform": "openai",
+    "name": "gpt-4"
+}
+
+response = zella_ai.logger.log(input, output, model, **{"message_chain_id": "mc_localtest", "tags": ["test"], "user": "test-user"})
+```
+
+</CodeGroup>
